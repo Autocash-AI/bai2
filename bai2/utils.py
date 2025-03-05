@@ -1,7 +1,7 @@
 import datetime
 import re
 
-from .constants import TypeCodes
+from .constants import TypeCodes, TypeCode, TypeCodeLevel, TypeCodeTransaction
 from .exceptions import NotSupportedYetException
 
 
@@ -66,9 +66,41 @@ def write_military_time(time):
         return datetime.datetime.strftime(date, '%H%M')
 
 
-def parse_type_code(value):
+def parse_summary_type_code(value):
     try:
-        return TypeCodes[value]
+        type_code = TypeCodes.get(value, None)
+        if type_code:
+            return type_code
+        elif (int(value)>=1 and int(value)<100):
+            return TypeCode(value, None, TypeCodeLevel.status, 'Custom Status')
+        elif (int(value)>=101 and int(value)<=399):
+            return TypeCode(value, TypeCodeTransaction.credit, TypeCodeLevel.summary, 'Custom Credit Summary')
+        elif (int(value)>=401 and int(value)<=699):
+            return TypeCode(value, TypeCodeTransaction.debit, TypeCodeLevel.summary, 'Custom Debit Summary')
+        elif (int(value)>=700 and int(value)<=799):
+            return TypeCode(value, TypeCodeTransaction.misc, TypeCodeLevel.summary, 'Custom Loan Summary')
+        elif (int(value)>=900 and int(value)<=999):  
+            return TypeCode(value, TypeCodeTransaction.misc, TypeCodeLevel.summary, 'Custom Summary')
+            
+    except KeyError:
+        raise NotSupportedYetException(f"Type code '{value}' is not supported yet")
+    
+def parse_detail_type_code(value):
+    try:
+        type_code = TypeCodes.get(value, None)
+        if type_code:
+            return type_code
+        elif (int(value)>=1 and int(value)<100):
+            return TypeCode(value, None, TypeCodeLevel.status, 'Custom Status')
+        elif (int(value)>=101 and int(value)<=399):
+            return TypeCode(value, TypeCodeTransaction.credit, TypeCodeLevel.detail, 'Custom Credit Transaction Detail')
+        elif (int(value)>=401 and int(value)<=699):
+            return TypeCode(value, TypeCodeTransaction.debit, TypeCodeLevel.detail, 'Custom Debit Transaction Detail')
+        elif (int(value)>=700 and int(value)<=799):
+            return TypeCode(value, TypeCodeTransaction.misc, TypeCodeLevel.detail, 'Custom Loan Detail')
+        elif (int(value)>=900 and int(value)<=999):  
+            return TypeCode(value, TypeCodeTransaction.misc, TypeCodeLevel.summary, 'Custom Detail')
+            
     except KeyError:
         raise NotSupportedYetException(f"Type code '{value}' is not supported yet")
 

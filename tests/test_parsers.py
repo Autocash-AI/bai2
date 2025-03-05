@@ -182,13 +182,13 @@ class TransactionDetailParserTestCase(TestCase):
         self.assertEqual(transaction.amount, 4346722)
         self.assertEqual(len(transaction.rows), 16)
 
-    def test_unsupported_type_code_should_raise_unsupported_exception(self):
-        lines = [
-            '16,299,1500000,1,DD1620,,DEALER PAYMENTS',
-        ]
+    # def test_unsupported_type_code_should_raise_unsupported_exception(self):
+    #     lines = [
+    #         '16,299,1500000,1,DD1620,,DEALER PAYMENTS',
+    #     ]
 
-        parser = TransactionDetailParser(IteratorHelper(lines))
-        self.assertRaises(NotSupportedYetException, parser.parse)
+    #     parser = TransactionDetailParser(IteratorHelper(lines))
+    #     self.assertRaises(NotSupportedYetException, parser.parse)
 
     def test_custom_type_code(self):
         """
@@ -203,11 +203,11 @@ class TransactionDetailParserTestCase(TestCase):
             '16,299,1500000,1,DD1620,,DEALER PAYMENTS',
         ]
 
-        with mock.patch.dict(TypeCodes, [
-            ('299', TypeCode('299', TypeCodeTransaction.credit, TypeCodeLevel.detail, 'Custom transaction')),
-        ]):
-            parser = TransactionDetailParser(IteratorHelper(lines))
-            transaction = parser.parse()
+        # with mock.patch.dict(TypeCodes, [
+        #     ('299', TypeCode('299', TypeCodeTransaction.credit, TypeCodeLevel.detail, 'Custom transaction')),
+        # ]):
+        parser = TransactionDetailParser(IteratorHelper(lines))
+        transaction = parser.parse()
 
         self.assertEqual(transaction.type_code.code, '299')
         self.assertEqual(transaction.amount, 1500000)

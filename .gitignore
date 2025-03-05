@@ -18,3 +18,7 @@ dist/
 # environments
 env/
 venv/
+
+#ide
+.vscode/
+.python-version

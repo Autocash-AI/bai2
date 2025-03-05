@@ -8,7 +8,7 @@ from .models import \
     Group, GroupHeader, GroupTrailer, \
     AccountIdentifier, AccountTrailer, Account, \
     TransactionDetail, Summary
-from .utils import parse_date, parse_time, parse_type_code
+from .utils import parse_date, parse_time, parse_detail_type_code, parse_summary_type_code
 
 
 # ABSTRACTION
@@ -212,7 +212,7 @@ class TransactionDetailParser(BaseSingleParser):
     model = TransactionDetail
 
     head_fields_config = [
-        ('type_code', parse_type_code),
+        ('type_code', parse_detail_type_code),
         ('amount', int),
         ('funds_type', FundsType),
     ]
@@ -257,7 +257,7 @@ class AccountIdentifierParser(BaseSingleParser):
         'currency',
     ]
     summary_fields_config = [
-        ('type_code', parse_type_code),
+        ('type_code', parse_summary_type_code),
         ('amount', int),
         ('item_count', int),
         ('funds_type', FundsType),
