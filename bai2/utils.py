@@ -99,7 +99,7 @@ def parse_detail_type_code(value):
         elif (int(value)>=700 and int(value)<=799):
             return TypeCode(value, TypeCodeTransaction.misc, TypeCodeLevel.detail, 'Custom Loan Detail')
         elif (int(value)>=900 and int(value)<=999):  
-            return TypeCode(value, TypeCodeTransaction.misc, TypeCodeLevel.summary, 'Custom Detail')
+            return TypeCode(value, TypeCodeTransaction.misc, TypeCodeLevel.detail, 'Custom Detail')
             
     except KeyError:
         raise NotSupportedYetException(f"Type code '{value}' is not supported yet")
