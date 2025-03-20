@@ -1,7 +1,7 @@
 import datetime
 from unittest import TestCase
 
-from bai2.utils import parse_date, parse_military_time, parse_time, write_time
+from bai2.utils import parse_date, parse_military_time, parse_time, write_time, parse_detail_type_code
 
 
 class ParseDateTestCase(TestCase):
@@ -89,3 +89,8 @@ class WriteTime(TestCase):
 
         str_value = write_time(time, True)
         self.assertEqual(str_value, '2400')
+        
+class ParseTypeCode(TestCase):
+    def test_parse_detail_type_code(self):
+        parse_detail_type_code('856')
+        
