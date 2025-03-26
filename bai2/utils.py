@@ -11,12 +11,12 @@ def parse_date(value):
     """
     # Try parsing with a 4-digit year first
     try:
-        return datetime.datetime.strptime(value, "%Y%m%d")
+        return datetime.datetime.strptime(value, "%Y%m%d").date()
     except ValueError:
         # If parsing fails, check for 2-digit year (only if string length is 6)
         if len(value) == 6:
             value = "20" + value  # Assuming the 2-digit year is in the 2000s
-            return datetime.datetime.strptime(value, "%Y%m%d")
+            return datetime.datetime.strptime(value, "%Y%m%d").date()
         else:
             # If the value is not in a valid format, return None
             return datetime.datetime.strptime(value, '%y%m%d').date()
