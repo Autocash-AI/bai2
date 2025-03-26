@@ -69,6 +69,11 @@ class ParseTestCase(TestCase):
         with self.open_test_file('svb_us_example') as f:
             bai2_file = bai2.parse_from_file(f)
             self.assertTrue(isinstance(bai2_file, Bai2File))
+            
+    def test_parse_from_file_4(self):
+        with self.open_test_file('boa_bai2a') as f:
+            bai2_file = bai2.parse_from_file(f)
+            self.assertTrue(isinstance(bai2_file, Bai2File))
 
     def test_parse_from_file_with_known_parsing_issue(self):
         with self.open_test_file('account_trailer_amount_blank_example') as f:
