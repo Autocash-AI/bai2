@@ -11,11 +11,17 @@ def _build_account_identifier_record(rows):
         # and then a multiple of 4 commas (the rest of the account identifier, which are summary components)
         # the rest of the rows will have only the summary components
         summary_commas_count = commas_count - 2 if index == 0 else commas_count
+        added_commas = False
 
         if field_str:
             if field_str[-1] == '/':
-                fields_str += field_str[:-1]
-                if summary_commas_count % 4 != 0:
+                if field_str[-2] != ",":
+                    added_commas = True
+                    fields_str += field_str[:-1]
+                    fields_str += ","
+                else:
+                    fields_str += field_str[:-1]
+                if summary_commas_count % 4 != 0 and not added_commas:
                     # if the number of commas is not a multiple of 4, then we need to add a comma
                     # some banks emit this extra comma, some don't, so we need to normalize it
                     fields_str += ','
