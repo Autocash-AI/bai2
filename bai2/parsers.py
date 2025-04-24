@@ -415,7 +415,7 @@ class Bai2FileHeaderParser(BaseSingleParser):
     def validate(self, obj):
         super().validate(obj)
 
-        if obj.version_number != 2:
+        if obj.version_number not in [2, 3]:
             raise NotSupportedYetException(
                 'Only BAI version 2 supported'
             )

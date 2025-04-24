@@ -74,9 +74,14 @@ class ParseTestCase(TestCase):
         with self.open_test_file('pnc_example') as f:
             bai2_file = bai2.parse_from_file(f)
             self.assertTrue(isinstance(bai2_file, Bai2File))
-            
+           
     def test_parse_from_bai2a(self):
         with self.open_test_file('boa_bai2a') as f:
+            bai2_file = bai2.parse_from_file(f)
+            self.assertTrue(isinstance(bai2_file, Bai2File))
+    
+    def test_parse_from_bai3(self):
+        with self.open_test_file('jpmc_example') as f:
             bai2_file = bai2.parse_from_file(f)
             self.assertTrue(isinstance(bai2_file, Bai2File))
 
